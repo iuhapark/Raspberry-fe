@@ -1,7 +1,7 @@
 "use client";
 
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { IIssue } from "../model/issue";
+import { ISse } from "../model/issue";
 import { findAllIssues, findIssueById, findCountIssues, saveIssue, modifyIssue, deleteIssue } from "./issue-service";
 import { initialState } from "./issue-init";
 

@@ -1,5 +1,5 @@
 import instance from "@/app/components/common/configs/axios-config";
-import { IIssue } from "../model/issue";
+import { ISse } from "../model/issue";
 
 export const findAllIssuesAPI = async (page: number) => {
   try {
@@ -34,7 +34,7 @@ export const findCountIssuesAPI = async () => {
   }
 };
 
-export const saveIssueAPI = async (issue: IIssue) => {
+export const saveIssueAPI = async (issue: ISse) => {
   console.log(`parameter in saveIssue: ${JSON.stringify(issue)}`);
   try {
     return (await instance().post(`issues/save`, issue)).data;
@@ -62,4 +62,19 @@ export const modifyIssueAPI = async (id: number) => {
   } catch (error) {
     return error;
   }
+};
+
+export const createEventSource = (url: string, onMessage: (data: any) => void) => {
+  const eventSource = new EventSource(url);
+
+  eventSource.onmessage = (event) => {
+      onMessage(JSON.parse(event.data));
+  };
+
+  eventSource.onerror = (error) => {
+      console.error("Error occurred:", error);
+      eventSource.close();
+  };
+
+  return eventSource;
 };

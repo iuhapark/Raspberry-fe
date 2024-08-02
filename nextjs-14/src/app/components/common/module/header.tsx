@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { PG } from "@/app/components/common/enums/PG";
 import {
   Dialog,
@@ -28,37 +28,42 @@ import {
   PhoneIcon,
   PlayCircleIcon,
 } from "@heroicons/react/20/solid";
-import { text } from "stream/consumers";
 import { Box } from "@mui/material";
 import Profile from "./profile";
+import {
+  setUser,
+} from "@/app/components/user/service/user-slice";
+
+import { useDispatch, useSelector } from "react-redux";
+
 
 const products = [
   {
-    name: "Analytics",
+    name: "Payment",
     description: "Get a better understanding of your traffic",
-    href: "#",
+    href: `/payments`,
     icon: ChartPieIcon,
   },
   {
-    name: "Engagement",
+    name: "Product",
     description: "Speak directly to your customers",
     href: "#",
     icon: CursorArrowRaysIcon,
   },
   {
-    name: "Security",
+    name: "Premium",
     description: "Your customers’ data will be safe and secure",
     href: "#",
     icon: FingerPrintIcon,
   },
   {
-    name: "Integrations",
+    name: "Order",
     description: "Connect with third-party tools",
     href: "#",
     icon: SquaresPlusIcon,
   },
   {
-    name: "Automations",
+    name: "Notification",
     description: "Build strategic funnels that will convert",
     href: "#",
     icon: ArrowPathIcon,
@@ -79,13 +84,13 @@ function Header() {
   return (
     <nav
       aria-label="Global"
-      className="fixed top-0 right-0 z-50 rounded-b-2xl transition-all duration-300 p-6 w-full"
+      className="fixed top-0 z-50 rounded-b-2xl transition-all duration-300 p-5 w-full"
       style={{
         backgroundColor: "var(--background)",
       }}
     >
-      <div className="flex">
-        <a href="#" className="-m-1.5 p-1.5">
+      <div className="flex items-center justify-between h-full">
+        <a href="#" className="-m-1.5 p-1.5 flex items-center">
           <span className="sr-only">Your Company</span>
           <span
             className="text-xl font-semibold cursor-pointer"
@@ -100,17 +105,19 @@ function Header() {
                 fontSize: "25px",
               }}
             >
-              
               Raspberry
             </Box>
           </span>
         </a>
 
-        <div className="flex-grow flex items-center justify-center">
-          <PopoverGroup className="hidden lg:flex lg:gap-x-12 item">
+        <div className="flex-grow flex items-center justify-center h-full">
+          <PopoverGroup className="hidden lg:flex lg:gap-x-12 items-center h-full">
             <Popover className="relative">
-              <PopoverButton className="flex items-center gap-x-1 text-sm font-semibold leading-6 bg-none w-auto h-auto m-0 shadow-none border-none">
-                juhapark
+              <PopoverButton
+                className="flex items-center gap-x-1 text-sm font-semibold bg-none leading-6 w-auto h-auto m-0 focus:outline-none focus:ring-2 hover:text-white focus:ring-white focus:ring-offset-1 shadow-none border-none"
+                style={{ color: "var(--text-color)" }}
+              >
+                Features
                 <ChevronDownIcon
                   aria-hidden="true"
                   className="h-5 w-5 flex-none"
@@ -131,7 +138,7 @@ function Header() {
                         <item.icon
                           aria-hidden="true"
                           className="h-6 w-6 text-gray-600"
-                          style={{ color: "var(--text-color)", }}
+                          style={{ color: "var(--text-color)" }}
                         />
                       </div>
                       <div className="flex-auto">
@@ -161,23 +168,28 @@ function Header() {
                 </div>
               </PopoverPanel>
             </Popover>
-
-            <a href="#" className="text-sm font-semibold leading-6">
-              Feed
-            </a>
-            <a href={friends} className="text-sm font-semibold leading-6 ">
-              Friends
-            </a>
-            <a href={chats} className="text-sm font-semibold leading-6 ">
-              Chats
-            </a>
+            <div className="hidden lg:flex lg:gap-x-12 items-center h-full">
+              <a href="#" className="relative text-sm font-semibold leading-6">
+                Feed
+              </a>
+              <a href={friends} className="text-sm font-semibold leading-6">
+                Friends
+              </a>
+              <a href={chats} className="text-sm font-semibold leading-6">
+                Chats
+              </a>
+            </div>
           </PopoverGroup>
         </div>
-      </div>
-      <div className="hidden lg:flex lg:items-center">
-        <Profile />
+          <div className="flex items-end h-full">
+            <Profile />
+          </div>
       </div>
     </nav>
   );
 }
 export default Header;
+function dispatch(arg0: { payload: Partial<import("../../user/model/user").IUser>; type: "users/setSelectedFields"; }) {
+  throw new Error("Function not implemented.");
+}
+

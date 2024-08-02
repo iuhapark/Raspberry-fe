@@ -61,19 +61,21 @@ export default function HomePage() {
             </h1>
             <p className="mt-6 text-3xl leading-8">Unlock your moments.</p>
             <div className="mt-10 flex items-center justify-center gap-x-6">
-              <button className="flex items-center gap-2 text-white py-2 px-4 w-36 h-12 shadow-md hover:bg-purple-300 focus:outline-none focus:ring-2 dark:focus:ring-pink-300 focus:ring-purple-300">
-                <img
-                  alt="Logo"
-                  src="/logo/logo.png"
-                  className="h-8 w-auto hidden dark:block"
-                />
-                <img
-                  alt="Logo"
-                  src="/logo/favicon.ico"
-                  className="h-8 w-auto dark:hidden"
-                />
-                Get started
-              </button>
+              <a href="/users/login">
+                <button className="flex items-center gap-2 text-white py-2 px-4 w-36 h-12 shadow-md hover:bg-purple-300 focus:outline-none focus:ring-2 dark:focus:ring-pink-300 focus:ring-purple-300">
+                  <img
+                    alt="Logo"
+                    src="/logo/logo.png"
+                    className="h-8 w-auto hidden dark:block"
+                  />
+                  <img
+                    alt="Logo"
+                    src="/logo/favicon.ico"
+                    className="h-8 w-auto dark:hidden"
+                  />
+                  Get started
+                </button>
+              </a>
             </div>
           </div>
         </div>

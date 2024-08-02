@@ -9,7 +9,7 @@ interface UserCardProps {
 }
 
 const UserCard: React.FC<UserCardProps> = ({ user, onSelect, showImage }) => {
-  const hasPicture = user?.picture !== null && user?.picture !== "";
+  const hasPicture = user?.profile !== null && user?.profile !== "";
 
   return (
     <div
@@ -62,7 +62,7 @@ const UserCard: React.FC<UserCardProps> = ({ user, onSelect, showImage }) => {
         {hasPicture && showImage && (
           <img
             className="w-52 h-52 rounded-2xl object-cover"
-            src={user?.picture || ""}
+            src={user?.profile || ""}
             alt="Profile Picture"
           />
         )}

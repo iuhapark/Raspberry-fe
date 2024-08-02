@@ -6,8 +6,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { parseCookies } from "nookies";
 import { jwtDecode } from "jwt-decode";
 import { IUser } from "@/app/components/user/model/user";
-import { IPayment } from "@/app/components/payment/model/payment";
-import { API } from "@/app/components/common/enums/API";
 import { getUserById } from "@/app/components/user/service/user-slice";
 import { findUserById } from "@/app/components/user/service/user-service";
 import PayComponent from "@/app/components/common/module/Pay";

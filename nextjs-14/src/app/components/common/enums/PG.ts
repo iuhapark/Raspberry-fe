@@ -1,7 +1,6 @@
 export const enum PG {
   // user
   USER = "/users",
-  AUTH = "/oauth",
   DETAIL = `/detail`,
   MYPAGE = `/mypage`,
   CHAT = `/chat`,

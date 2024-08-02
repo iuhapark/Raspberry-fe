@@ -10,7 +10,7 @@ export const initialState: IUser = {
   age: '',
   gender: '',
   point: '',
-  picture: '',
+  profile: '',
   regDate: '',
   modDate: '',
   username: '',

@@ -27,18 +27,43 @@ import {
   PlayCircleIcon,
 } from "@heroicons/react/20/solid";
 
+
+import { useDispatch } from "react-redux";
+import { findUserByEmail } from "@/app/components/user/service/user-service";
+
+
 export default function TemporaryDrawer() {
+
+
+const dispatch = useDispatch();
+const [showProfile, setShowProfile] = useState(false);
+const token = parseCookies().accessToken;
+useEffect(() => {
+  if (token) {
+    try {
+      const decoded: any = jwtDecode(token);
+      dispatch(findUserByEmail(decoded.sub));
+    } catch (error) {
+      console.error("Invalid token:", error);
+    }
+  } else {
+    console.error("Token is missing");
+  }
+
+  setShowProfile(!!token);
+}, [token, dispatch]);
+
   const [open, setOpen] = React.useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const products = [
     {
-      name: "Analytics",
+      name: "Payment",
       description: "Get a better understanding of your traffic",
       href: "#",
       icon: ChartPieIcon,
     },
     {
-      name: "Engagement",
+      name: "Product",
       description: "Speak directly to your customers",
       href: "#",
       icon: CursorArrowRaysIcon,
@@ -100,7 +125,7 @@ export default function TemporaryDrawer() {
 
   if (open) {
     document.body.style.paddingLeft = "220px";
-    document.body.style.transition = "padding-left 0.3s";
+    document.body.style.transition = "padding-left 0.1s";
   } else {
     document.body.style.paddingLeft = "0";
   }

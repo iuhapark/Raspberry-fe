@@ -100,7 +100,7 @@ export default function SavePostPage() {
           <input
             {...register("writerId", { required: true })}
             type="hidden"
-            value={jwtDecode<any>(parseCookies().accessToken).id}
+            // value={jwtDecode<any>(parseCookies().accessToken).id}
             readOnly
           />
           <div className="mt-4">

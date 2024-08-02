@@ -12,11 +12,11 @@ import { API } from "@/app/components/common/enums/API";
 import { getUserById } from "@/app/components/user/service/user-slice";
 import {
   findUserById,
+  findUserByEmail,
   updateUserPoint,
 } from "@/app/components/user/service/user-service";
 import { getProductById } from "@/app/components/product/service/product-slice";
 import { savePayment } from "@/app/components/payment/service/payment-service";
-import PayComponent from "@/app/components/common/module/Pay";
 import { IPayment } from "@/app/components/payment/model/payment";
 
 
@@ -43,33 +43,35 @@ export default function Product() {
   const token = parseCookies().accessToken;
   const [transactions, setTransactions] = useState<any[]>([]);
 
-  useEffect(() => {
-    if (token) {
-      try {
-        const decoded: any = jwtDecode(token);
-        console.log("User id in Payment: " + decoded.id);
-        dispatch(findUserById(decoded.id));
-      } catch (error) {
-        console.error("Invalid token:", error);
-      }
-    } else {
-      console.error("Token is missing");
-    }
+  // useEffect(() => {
+  //   if (token) {
+  //     try {
+  //       const decoded: any = jwtDecode(token);
+  //       console.log("User id in Payment: " + decoded.id);
+  //       dispatch(findUserById(decoded.id));
+  //     } catch (error) {
+  //       console.error("Invalid token:", error);
+  //     }
+  //   } else {
+  //     console.error("Token is missing");
+  //   }
 
-    if (user.id) {
-      fetch(`${API.SERVER}/${user.id}`, {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log("MY-INFO: data: " + JSON.stringify(data));
-        })
-        .catch((error) => console.log("error: ", error));
-    }
-  }, [dispatch, user?.id]);
+  //   if (user.id) {
+  //     fetch(`${API.SERVER}/${user.id}`, {
+  //       method: "GET",
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     })
+  //       .then((response) => response.json())
+  //       .then((data) => {
+  //         console.log("MY-INFO: data: " + JSON.stringify(data));
+  //       })
+  //       .catch((error) => console.log("error: ", error));
+  //   }
+  // }, [dispatch, user?.id]);
+
+  const userId = 1;
 
   useEffect(() => {
     const loadProducts = async () => {
@@ -111,7 +113,8 @@ export default function Product() {
 
       window.IMP.request_pay(
         {
-          id: user.id,
+          // id: user.id,
+          id: userId,
           pg: "html5_inicis",
           pay_method: "card",
           orderUid: new Date().getTime().toString(),
@@ -128,7 +131,8 @@ export default function Product() {
             const paymentData: IPayment = {
               payment_uid: rsp.imp_uid,
               buyer: {
-                id: user.id,
+                // id: user.id,
+                id: userId,
               },
               product: {
                 id: selectedProductId as number,

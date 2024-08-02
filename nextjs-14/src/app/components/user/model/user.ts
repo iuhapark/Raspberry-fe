@@ -9,7 +9,7 @@ export interface IUser {
   age?: string;
   gender?: string;
   point?: string;
-  picture?: string;
+  profile?: string;
   regDate?: string;
   modDate?: string;
 }

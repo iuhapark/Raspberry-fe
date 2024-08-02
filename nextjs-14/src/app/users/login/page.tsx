@@ -95,7 +95,7 @@ export default function LoginPage() {
               router.push(`/`);
             })
             .catch((err: any) => {
-              console.log("Login Failed");
+              alert("로그인에 실패했습니다.");
             });
         } else {
           console.log("존재하지 않는 이메일입니다");
@@ -151,7 +151,7 @@ export default function LoginPage() {
           {!beforeSubmit && !existsEmailSelector && (
             <pre>
               <p className="font-sans text-red-500 text-sm">
-                Email does not exist.
+                User doesn't exist.
               </p>
             </pre>
           )}
@@ -195,6 +195,13 @@ export default function LoginPage() {
               className="text-xs text-gray-500 text-center w-full"
             >
               <span className="text-blue-500">Create account</span>
+            </Link>
+            <br />
+            <Link
+              href="http://localhost:8000/oauth2/authorization/google"
+              className="text-xs text-gray-500 text-center w-full"
+            >
+              <span className="text-blue-500">Google Login</span>
             </Link>
           </div>
         </div>

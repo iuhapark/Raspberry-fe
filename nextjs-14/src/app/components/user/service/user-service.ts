@@ -11,6 +11,7 @@ import {
   joinAPI,
   oAuthAPI,
   updateUserPointAPI,
+  findUserByEmailAPI
 } from "./user-api";
 import { IUser } from "../model/user";
 import instance from "../../common/configs/axios-config";
@@ -32,6 +33,15 @@ export const findUserById: any = createAsyncThunk(
       console.error("API 호출 오류:", error); // 오류 로그 확인
       throw error;
     }
+  }
+);
+
+export const findUserByEmail: any = createAsyncThunk(
+  "users/findByEmail",
+  async (email: string) => {
+    const data = await findUserByEmailAPI(email);
+    console.log(data);
+    return data;
   }
 );
 

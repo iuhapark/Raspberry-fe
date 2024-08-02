@@ -24,10 +24,20 @@ export const findUserByIdAPI = async (id: number) => {
   }
 };
 
+export const findUserByEmailAPI = async (email: string) => {
+  try {
+    const response = await instance().get(`/findEmail`, { params: { email } });
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+}
+
 export const loginAPI = async (user: IUser) => {
   console.log(`Parameter in loginAPI: ${JSON.stringify(user)}`)
   try {
-    const response = await instance().post(`/login`, user);
+    const response = await instance().post(`/auth/login`, user);
     return response.data;
   } catch (error) {
     console.log(error);
@@ -38,7 +48,7 @@ export const loginAPI = async (user: IUser) => {
 export const joinAPI = async (user: IUser) => {
   try {
     console.log(`Parameter in joinAPI: ${JSON.stringify(user)}`)
-    const response = await instance().post(`/save`, user);
+    const response = await instance().post(`/auth/save`, user);
     return response.data;
   } catch (error) {
     console.log(error);
@@ -92,7 +102,7 @@ export const logoutAPI = async () => {
 
 export const updateUserAPI = async (id: number) => {
   try {
-    const response = await instance().put(`/modify`, { params: { id } });
+    const response = await instance().put(`/${id}`, { params: { id } });
     return response.data;
   } catch (error) {
     console.log(error);
@@ -113,7 +123,7 @@ export const updateUserPointAPI = async (id: number) => {
 
 export const deleteUserAPI = async (id: number) => {
   try {
-    const response = await instance().delete(`/delete`, { params: { id } });
+    const response = await instance().delete(`/${id}`, { params: { id } });
     return response.data;
   } catch (error) {
     console.log(error);

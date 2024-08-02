@@ -33,22 +33,23 @@ const PayComponent: React.FC<PayComponentProps> = ({
   const user: IUser = useSelector(getUserById);
   const token = parseCookies().accessToken;
   const [point, setPoint] = useState<number>(chargePoint || 0);
+  const userId = 1;
 
-  useEffect(() => {
-    const cookies = parseCookies();
-    const token = cookies.accessToken;
+  // useEffect(() => {
+  //   const cookies = parseCookies();
+  //   const token = cookies.accessToken;
 
-    if (token) {
-      try {
-        const decoded: any = jwtDecode(token);
-        dispatch(findUserById(decoded.id));
-      } catch (error) {
-        console.error("Invalid token:", error);
-      }
-    } else {
-      console.error("Token is missing");
-    }
-  }, [dispatch]);
+  //   if (token) {
+  //     try {
+  //       const decoded: any = jwtDecode(token);
+  //       dispatch(findUserById(decoded.id));
+  //     } catch (error) {
+  //       console.error("Invalid token:", error);
+  //     }
+  //   } else {
+  //     console.error("Token is missing");
+  //   }
+  // }, [dispatch]);
 
   const requestPay = async (amount: number) => {
     window.IMP.init("imp78717406");
@@ -59,7 +60,8 @@ const PayComponent: React.FC<PayComponentProps> = ({
 
     window.IMP.request_pay(
       {
-        id: user.id,
+        // id: user.id,
+        id: userId,
         pg: "html5_inicis",
         pay_method: "card",
         paymentUid: new Date().getTime().toString(),
@@ -76,7 +78,8 @@ const PayComponent: React.FC<PayComponentProps> = ({
             item_name: product?.item_name || "포인트",
             amount: amount,
             buyer: {
-              id: user.id,
+              id: userId
+              // id: user.id,
             },
             product: product
               ? {

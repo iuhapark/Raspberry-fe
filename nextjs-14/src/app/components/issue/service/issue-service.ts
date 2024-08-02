@@ -7,7 +7,7 @@ import {
   deleteIssueAPI,
   modifyIssueAPI
 } from "./issue-api";
-import { IIssue } from "../model/issue";
+import { ISse } from "../model/issue";
 
 export const findAllIssues: any = createAsyncThunk(
   "issues/findAllIssues",
@@ -32,7 +32,7 @@ export const findCountIssues: any = createAsyncThunk(
 
 export const saveIssue: any = createAsyncThunk(
   "issues/saveIssue",
-  async (issue: IIssue) => {
+  async (issue: ISse) => {
     try {
       return await saveIssueAPI(issue);
     } catch (error) {

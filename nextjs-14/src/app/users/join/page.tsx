@@ -13,7 +13,10 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import { PG } from "@/app/components/common/enums/PG";
-import { getExistsUsername, getExistsEmail } from "@/app/components/user/service/user-slice";
+import {
+  getExistsUsername,
+  getExistsEmail,
+} from "@/app/components/user/service/user-slice";
 import Footer from "@/app/components/common/module/footer";
 
 export default function Join({ params }: any) {
@@ -29,7 +32,6 @@ export default function Join({ params }: any) {
   const [isWrongPhone, setIsWrongPhone] = useState(false);
   const [beforeSubmit, setBeforeSubmit] = useState(true);
   const [len, setLen] = useState("");
-  const existsUsernameSelector = useSelector(getExistsUsername);
   const existsEmailSelector = useSelector(getExistsEmail);
 
   const {
@@ -113,8 +115,6 @@ export default function Join({ params }: any) {
     }
   };
 
-
-
   const handleName = (e: any) => {
     setUser({ ...user, name: e.target.value });
   };
@@ -153,12 +153,15 @@ export default function Join({ params }: any) {
             Create your account
           </p>
           <div className="mb-4">
-            <label htmlFor="email" className="block light:text-gray-700  text-sm">
+            <label
+              htmlFor="email"
+              className="block light:text-gray-700  text-sm"
+            >
               Email
             </label>
             <input
               type="text"
-              className="h-[6vh] text-gray-700  border border-gray-300 rounded-2xl py-2 px-4 block w-full focus:outline-2 focus:outline-blue-500 mt-2"
+              className="h-[6vh] light:text-gray-700  border border-gray-300 rounded-2xl py-2 px-4 block w-full focus:outline-2 focus:outline-blue-500 mt-2"
               onChange={handleEmail}
               // {...register("email", {
               //   required: "Email is required",
@@ -173,21 +176,31 @@ export default function Join({ params }: any) {
                 Invalid email address
               </p>
             )}
-            {isTrueEmail && len?.length > 1 && (
+            {isTrueEmail && len?.length > 1  && !existsEmailSelector && (
               <pre>
                 <p className="font-sans text-blue-500 text-sm">
                   Valid email addrress.
                 </p>
               </pre>
             )}
+            {beforeSubmit && isTrueEmail && existsEmailSelector && (
+              <pre>
+                <p className="font-sans text-red-500 text-sm">
+                  Email already exists.
+                </p>
+              </pre>
+            )}{" "}
           </div>
           <div className="mb-4">
-            <label htmlFor="password" className="block light:text-gray-700  text-sm">
+            <label
+              htmlFor="password"
+              className="block light:text-gray-700  text-sm"
+            >
               Password
             </label>{" "}
             <input
               type="password"
-              className="h-[6vh] text-gray-700 border border-gray-300 rounded-2xl py-2 px-4 block w-full focus:outline-2 focus:outline-blue-500 mt-2"
+              className="h-[6vh] light:text-gray-700 border border-gray-300 rounded-2xl py-2 px-4 block w-full focus:outline-2 focus:outline-blue-500 mt-2"
               onChange={handlePassword}
               // {...register("password", { required: "Password is required" })}
             />
@@ -209,12 +222,15 @@ export default function Join({ params }: any) {
             )}
           </div>
           <div className="mb-4">
-            <label htmlFor="name" className="block light:text-gray-700  text-sm">
+            <label
+              htmlFor="name"
+              className="block light:text-gray-700  text-sm"
+            >
               Name
             </label>
             <input
               type="text"
-              className="h-[6vh] text-gray-700  border border-gray-300 rounded-2xl py-2 px-4 block w-full focus:outline-2 focus:outline-blue-500 mt-2"
+              className="h-[6vh] light:text-gray-700  border border-gray-300 rounded-2xl py-2 px-4 block w-full focus:outline-2 focus:outline-blue-500 mt-2"
               onChange={handleName}
               // {...register("name", { required: "Name is required" })}
             />
@@ -223,12 +239,15 @@ export default function Join({ params }: any) {
             )}
           </div>
           <div className="mb-4">
-            <label htmlFor="phone" className="block light:text-gray-700  text-sm">
+            <label
+              htmlFor="phone"
+              className="block light:text-gray-700  text-sm"
+            >
               Phone
             </label>
             <input
               type="text"
-              className="h-[6vh] text-gray-700  border border-gray-300 rounded-2xl py-2 px-4 block w-full focus:outline-2 focus:outline-blue-500 mt-2"
+              className="h-[6vh] light:text-gray-700  border border-gray-300 rounded-2xl py-2 px-4 block w-full focus:outline-2 focus:outline-blue-500 mt-2"
               onChange={handlePhone}
               // {...register("phone", { required: "Phone is required" })}
             />
@@ -251,7 +270,7 @@ export default function Join({ params }: any) {
             </label>
             <input
               type="text"
-              className="h-[6vh] text-gray-700  border border-gray-300 rounded-2xl py-2 px-4 block w-full focus:outline-2 focus:outline-blue-500 mt-2"
+              className="h-[6vh] light:text-gray-700  border border-gray-300 rounded-2xl py-2 px-4 block w-full focus:outline-2 focus:outline-blue-500 mt-2"
               onChange={handleAge}
               // {...register("age", { required: "Job is required" })}
             />
@@ -263,7 +282,7 @@ export default function Join({ params }: any) {
             </label>
             <input
               type="text"
-              className="h-[6vh] text-gray-700  border border-gray-300 rounded-2xl py-2 px-4 block w-full focus:outline-2 focus:outline-blue-500 mt-2"
+              className="h-[6vh] light:text-gray-700  border border-gray-300 rounded-2xl py-2 px-4 block w-full focus:outline-2 focus:outline-blue-500 mt-2"
               onChange={handleSex}
               // {...register("age", { required: "Job is required" })}
             />

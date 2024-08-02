@@ -7,6 +7,7 @@ import { getUserById } from "@/app/components/user/service/user-slice";
 import {
   updateUser,
   deleteUser,
+  findUserByEmail,
 } from "@/app/components/user/service/user-service";
 import { IUser } from "@/app/components/user/model/user";
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -30,26 +31,40 @@ export default function UserDetail() {
   } = useForm<IUser>();
 
   const user: IUser = useSelector(getUserById);
+
   useEffect(() => {
-    const decoded: any = jwtDecode(token);
-    if (token !== "" && user?.id) {
-      console.log("user id in Mypage : " + decoded.id);
-      fetch(`${API.SERVER}/${user.id}`, {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${parseCookies().accessToken}`,
-        },
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log("Fetched data: ", data);
-          reset(data);
-        })
-        .catch((error) => console.log("error: ", error));
+    const cookies = parseCookies();
+    const token = cookies.accessToken;
+
+    if (token) {
+      try {
+        const decoded: any = jwtDecode(token);
+        console.log("decoded: ", decoded);
+        dispatch(findUserByEmail(decoded.sub));
+      } catch (error) {
+        console.error("Invalid token:", error);
+      }
     } else {
-      console.log("user id is " + user?.id);
+      console.error("Token is missing");
     }
-    if (user?.picture !== null && user?.picture !== undefined) {
+
+    // if (token !== "" && user?.id) {
+    //       console.log("user id in Mypage : " + decoded.id);
+    //       fetch(`${API.SERVER}/${user.id}`, {
+    //         method: "GET",
+    //         headers: {
+    //           Authorization: `Bearer ${parseCookies().accessToken}`,
+    //         },
+    //       })
+    //         .then((response) => response.json())
+    //         .then((data) => {
+    //           console.log("Fetched data: ", data);
+    //           reset(data);
+    //         })
+    //         .catch((error) => console.log("error: ", error));
+    //     }
+
+    if (user?.profile !== null && user?.profile !== undefined) {
       setShowImage(true);
     } else {
       setShowImage(false);
@@ -86,13 +101,15 @@ export default function UserDetail() {
 
   return (
     <div className="flex justify-center h-screen w-full px-5 sm:px-0 gap-10">
-      <div className="mt-28 w-[54vh] h-[67vh] flex rounded-[3.5vh] shadow-2xl overflow-x-auto"
-      style={{ backgroundColor: "var(--form-background)" }}>
+      <div
+        className="mt-28 w-[54vh] h-[67vh] flex rounded-[3.5vh] shadow-2xl overflow-x-auto"
+        style={{ backgroundColor: "var(--form-background)" }}
+      >
         <div className="w-full p-[8.5vh] justify-center items-center">
           {showImage && (
             <img
               className="w-32 h-32 rounded-full object-cover"
-              src={user?.picture || ""}
+              src={user?.profile || ""}
             ></img>
           )}
           {!showImage && (
@@ -129,7 +146,9 @@ export default function UserDetail() {
             Update info
           </p>
           <div className="mb-4">
-            <label className="block light:text-gray-700 text-sm mb-2">Email</label>
+            <label className="block light:text-gray-700 text-sm mb-2">
+              Email
+            </label>
             <input
               type="text"
               className="h-[6vh] light:text-gray-700  border border-gray-300 rounded-2xl py-2 px-4 block w-full focus:outline-2 focus:outline-blue-500"
@@ -137,7 +156,9 @@ export default function UserDetail() {
             />
           </div>
           <div className="mb-4">
-            <label className="block light:text-gray-700 text-sm mb-2">Password</label>
+            <label className="block light:text-gray-700 text-sm mb-2">
+              Password
+            </label>
             <input
               type="password"
               className="h-[6vh] light:text-gray-700  border border-gray-300 rounded-2xl py-2 px-4 block w-full focus:outline-2 focus:outline-blue-500"
@@ -146,7 +167,9 @@ export default function UserDetail() {
           </div>
 
           <div className="mb-4">
-            <label className="block light:text-gray-700 text-sm mb-2">Name</label>
+            <label className="block light:text-gray-700 text-sm mb-2">
+              Name
+            </label>
             <input
               type="text"
               className="h-[6vh] light:text-gray-700 light:bg-gray-200 border border-gray-300 rounded-2xl py-2 px-4 block w-full focus:outline-none"
@@ -155,7 +178,9 @@ export default function UserDetail() {
             />
           </div>
           <div className="mb-4">
-            <label className="block light:text-gray-700 text-sm mb-2">Phone</label>
+            <label className="block light:text-gray-700 text-sm mb-2">
+              Phone
+            </label>
             <input
               type="text"
               className="h-[6vh] light:text-gray-700 border border-gray-300 rounded-2xl py-2 px-4 block w-full focus:outline-2 focus:outline-blue-500"
@@ -163,7 +188,9 @@ export default function UserDetail() {
             />
           </div>
           <div className="mb-4">
-            <label className="block light:text-gray-700  text-sm mb-2">Age</label>
+            <label className="block light:text-gray-700  text-sm mb-2">
+              Age
+            </label>
             <input
               type="text"
               className="h-[6vh] light:text-gray-700 border border-gray-300 rounded-2xl py-2 px-4 block w-full focus:outline-2 focus:outline-blue-500"
@@ -171,7 +198,9 @@ export default function UserDetail() {
             />
           </div>
           <div className="mb-4">
-            <label className="block light:text-gray-700  text-sm mb-2">Sex</label>
+            <label className="block light:text-gray-700  text-sm mb-2">
+              Sex
+            </label>
             <input
               type="text"
               className="h-[6vh] light:text-gray-700 border border-gray-300 rounded-2xl py-2 px-4 block w-full focus:outline-2 focus:outline-blue-500"

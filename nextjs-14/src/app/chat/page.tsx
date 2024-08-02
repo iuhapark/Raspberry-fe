@@ -161,7 +161,7 @@ const ChatRoom: React.FC = () => {
             <img
               alt=""
               className="rounded-full small-avatar"
-              src={user.picture || ""}
+              src={user.profile || ""}
             />
             <span className="badge badge-circle bg-gray-400 absolute top-7 end-0.5 ring-1 ring-light transform -translate-y-1/2"></span>
           </div>

@@ -1,14 +1,17 @@
-import { IIssue } from "../model/issue";
+import { ISse } from "../model/issue";
 
-export const initialState: IIssue = {
+export const initialState: ISse = {
   id: 0,
   law: '',
   title: '',
   content: '',
-  writerId: 0,
+  client: {
+    id: 0,
+  },
   boardId: 0,
   regDate: '',
   modDate: '',
+  attachment: '',
   json: {},
-  array: []
+  array: [],
 };
